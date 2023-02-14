@@ -26,4 +26,9 @@ Route.get("/", async () => {
 
 Route.group(() => {
   Route.post("/login", "AuthController.login");
+  Route.post("/register", "AuthController.register");
+
+  Route.group(() => {
+    Route.post("/donations", "DonationsController.create");
+  }).middleware("auth");
 }).prefix("api/v1");
