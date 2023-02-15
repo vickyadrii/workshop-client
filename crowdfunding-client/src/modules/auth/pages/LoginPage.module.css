@@ -1,0 +1,15 @@
+.loginForm {
+  max-width: 80%;
+  margin: 20px auto 0 auto;
+}
+.loginFormForgot {
+  float: right;
+}
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.loginFormButton {
+  width: 100%;
+}
+.inputForm {
+}
