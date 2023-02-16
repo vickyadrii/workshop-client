@@ -1,3 +1,10 @@
 import { LoginPage } from "./pages";
-const authRoutes = [{ path: "/login", element: <LoginPage /> }];
+import RegistrationPage from "./pages/RegistrationPage";
+const authRoutes = [
+  { path: "/login", element: <LoginPage /> },
+  {
+    path: "/registration",
+    element: <RegistrationPage />,
+  },
+];
 export default authRoutes;
