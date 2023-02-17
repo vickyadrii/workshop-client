@@ -10,17 +10,17 @@ export default class DonationsController {
 
     const validatorSchema = schema.create({
       total: schema.number(),
-      fundraisingId: schema.number(),
+      campaignId: schema.number(),
     });
 
-    const { total, fundraisingId } = await request.validate({
+    const { total, campaignId } = await request.validate({
       schema: validatorSchema,
     });
 
     const payload: AddDonationPayload = {
       userId: userId!,
       total,
-      fundraisingId,
+      campaignId,
     };
 
     try {
