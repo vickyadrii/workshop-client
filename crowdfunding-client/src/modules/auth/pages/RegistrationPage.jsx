@@ -1,46 +1,54 @@
-import { Card } from "antd";
-import { LockOutlined, UserOutlined, EyeTwoTone } from "@ant-design/icons";
+import {message} from "antd"
 import { Form, Input, Space, Button } from "antd";
 import styles from "./LoginPage.module.css";
 import { useNavigate } from "react-router-dom";
-import Link from "antd/es/typography/Link";
 import { useState } from "react";
+
+const initialData = {
+  fullname: "",
+  email: "",
+  password: "",
+  confPass: ""
+}
 
 export default function RegistrationPage() {
   const navigate = useNavigate();
-  const [fullname, setFullname] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confPass, setConfPass] = useState("")
-  
+  const [formRegis, setFormRegis] = useState(initialData)
+  const [messageApi, contextHolder] = message.useMessage();
 
-  const onFinish = (values) => {
-    // console.log(values);
-    if(password == confPass){
+  const onFinish = () => {
+    console.log(formRegis);
+    if(formRegis.password == formRegis.confPass){
       navigate("/", { replace: true });
     } else {
-      alert('Masukkan konfirmasi password dengan benar!')
+      warning("Your confirmation password must be the same!")
     }
   };
+
+  const warning = (msg) => {
+    messageApi.open({
+      type: 'warning',
+      content: msg,
+    })
+  }
 
   const onFinishFailed = (error) => {
     console.log(error);
   };
-
-  const toPageLogin = () => {
-    navigate('/login')
-  }
   
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormRegis(prevState => ({ ...prevState, [name]: value }));
+  }
+
   return (
     <Form
       className={styles.loginForm}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      // initialValues={{
-      //   remember: true,
-      // }}
     >
+      {contextHolder}
       <h1 style={{color: "#15B2C0", fontSize:"1.7rem"}}>Registration</h1>
       <Form.Item
         name="fullname"
@@ -57,17 +65,18 @@ export default function RegistrationPage() {
             boxShadow: "none",
             // margin: "1rem 0",
           }}
-          value={fullname}
-          onChange={(e) => setFullname(e.target.value)}
+          name={"fullname"}
+          value={formRegis.fullname}
+          onChange={handleChange}
         />
       </Form.Item>
       <Form.Item
-        name="username"
-        rules={[{ required: true, message: "Please input your username!" }]}
+        name="email"
+        rules={[{ required: true, message: "Please input your email!" }]}
       >
         <Input
           size="large"
-          placeholder="Username"
+          placeholder="Email"
           bordered={false}
           style={{
             border: "none",
@@ -76,8 +85,9 @@ export default function RegistrationPage() {
             boxShadow: "none",
           
           }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name={"email"}
+          value={formRegis.email}
+          onChange={handleChange}
         />
       </Form.Item>
       <Form.Item
@@ -87,7 +97,6 @@ export default function RegistrationPage() {
         <Input.Password
           bordered={false}
           size="large"
-          // prefix={<LockOutlined style={{ marginRight: "20px" }} />}
           style={{
             border: "none",
             borderRadius: "0px",
@@ -95,9 +104,10 @@ export default function RegistrationPage() {
             boxShadow: "none",
             
           }}
+          name={"password"}
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formRegis.password}
+          onChange={handleChange}
         />
       </Form.Item>
       <Form.Item
@@ -107,7 +117,6 @@ export default function RegistrationPage() {
         <Input.Password
           bordered={false}
           size="large"
-          // prefix={<LockOutlined style={{ marginRight: "20px" }} />}
           style={{
             border: "none",
             borderRadius: "0px",
@@ -115,12 +124,12 @@ export default function RegistrationPage() {
             boxShadow: "none",
             
           }}
+          name={"confPass"}
           placeholder="Confirmation Password"
-          value={confPass}
-          onChange={(e)=> setConfPass(e.target.value)}
+          value={formRegis.confPass}
+          onChange={handleChange}
         />
       </Form.Item>
-      <Link onClick={toPageLogin}>Sudah Punya Akun?</Link>
       <Button
           type="primary"
           htmlType="submit"
@@ -133,25 +142,7 @@ export default function RegistrationPage() {
         >
           Submit
         </Button>
-      {/* <Form.Item
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          width:"100%",
-        }}
-      >
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{
-            width:"100%",
-            backgroundColor: "#15B2C0",
-            fontWeight: "600",
-          }}
-        >
-          Submit
-        </Button>
-      </Form.Item> */}
+        <p onClick={()=> navigate('/')} style={{color:"blue", marginBottom:"1.5rem"}}>Already have account!</p>
     </Form>
   );
 }
