@@ -1,13 +1,17 @@
-import { HomePage, HomePageId } from "./pages";
+import { CampaignPage, CampaignListPage, CampaignPageId } from "./pages";
 
 const homeRoutes = [
   {
-    path: "/home",
-    element: <HomePage />,
+    path: "/",
+    element: <CampaignPage />,
   },
   {
-    path: "/home/:id",
-    element: <HomePageId />,
+    path: "/campaign",
+    element: <CampaignListPage />,
+  },
+  {
+    path: "campaign/:id",
+    element: <CampaignPageId />,
   },
 ];
 export default homeRoutes;

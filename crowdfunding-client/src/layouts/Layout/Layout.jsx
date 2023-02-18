@@ -1,9 +1,20 @@
-import { Layout, Menu, Slider } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
-
+import { Button, Layout, Menu, Slider } from "antd";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { HeartTwoTone, HomeTwoTone, RocketTwoTone } from "@ant-design/icons";
 const { Content, Header, Footer } = Layout;
 
 export default function MobileLayout() {
+  const stylePageNavbar = {
+    display: "flex",
+    alignItems: "center",
+    gap: "2px",
+    flexDirection: "column",
+    height: "50px",
+    fontWeight: 600,
+    color: "#15B2C0",
+    fontSize: "12px",
+  };
+
   return (
     <Layout
       style={{
@@ -12,14 +23,6 @@ export default function MobileLayout() {
         margin: "0 auto",
       }}
     >
-      {/* <Header
-        style={{
-          backgroundColor: "#15B2C0",
-          color: "#fff",
-        }}
-      >
-        <h3>This is a header</h3>
-      </Header> */}
       <Content style={{ backgroundColor: "#fdfcfc" }}>
         <Outlet />
       </Content>
@@ -32,7 +35,43 @@ export default function MobileLayout() {
           zIndex: "10",
         }}
       >
-        Footer
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+          }}
+        >
+          <Link to="/">
+            <div style={stylePageNavbar}>
+              <HomeTwoTone
+                style={{
+                  fontSize: 32,
+                }}
+              />
+              Home
+            </div>
+          </Link>
+          <Link to="/campaign">
+            <div style={stylePageNavbar}>
+              <HeartTwoTone
+                style={{
+                  fontSize: 32,
+                }}
+              />
+              Campaign
+            </div>
+          </Link>
+          <Link to="/">
+            <div style={stylePageNavbar}>
+              <RocketTwoTone
+                style={{
+                  fontSize: 32,
+                }}
+              />
+              Add Campaign
+            </div>
+          </Link>
+        </div>
       </Footer>
     </Layout>
   );

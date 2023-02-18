@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 
 import "./styles.css";
 
-const HomeCard = () => {
+const CampaignCard = () => {
   const navigate = useNavigate();
   return (
     <Swiper
@@ -59,7 +59,7 @@ const HomeCard = () => {
             <Card
               cover={<img src={image} alt="" />}
               onClick={() => {
-                navigate(`/home/${id}`);
+                navigate(`/campaign/${id}`);
               }}
               bordered={false}
             >
@@ -121,4 +121,4 @@ const HomeCard = () => {
   );
 };
 
-export default HomeCard;
+export default CampaignCard;
