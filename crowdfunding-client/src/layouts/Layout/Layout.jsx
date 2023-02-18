@@ -9,24 +9,27 @@ export default function MobileLayout() {
       style={{
         minHeight: "100vh",
         maxWidth: "640px",
-        margin: "0 auto", 
+        margin: "0 auto",
       }}
     >
-      <Header
+      {/* <Header
         style={{
           backgroundColor: "#15B2C0",
           color: "#fff",
         }}
       >
         <h3>This is a header</h3>
-      </Header>
-      <Content style={{ backgroundColor: "white" }}>
+      </Header> */}
+      <Content style={{ backgroundColor: "#fdfcfc" }}>
         <Outlet />
       </Content>
       <Footer
         style={{
           backgroundColor: "#fff",
           borderTop: "1px solid #cecece",
+          position: "sticky",
+          bottom: "0",
+          zIndex: "10",
         }}
       >
         Footer

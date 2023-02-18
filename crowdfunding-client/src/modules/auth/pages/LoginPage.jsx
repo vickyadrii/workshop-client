@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const onFinish = (values) => {
     console.log(values);
-    navigate("/", { replace: true });
+    navigate("/home", { replace: true });
   };
 
   const onFinishFailed = (error) => {
