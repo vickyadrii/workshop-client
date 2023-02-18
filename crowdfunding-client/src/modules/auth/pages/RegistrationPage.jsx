@@ -4,13 +4,23 @@ import { Form, Input, Space, Button } from "antd";
 import styles from "./LoginPage.module.css";
 import { useNavigate } from "react-router-dom";
 import Link from "antd/es/typography/Link";
+import { useState } from "react";
 
 export default function RegistrationPage() {
   const navigate = useNavigate();
+  const [fullname, setFullname] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confPass, setConfPass] = useState("")
+  
 
   const onFinish = (values) => {
-    console.log(values);
-    navigate("/", { replace: true });
+    // console.log(values);
+    if(password == confPass){
+      navigate("/", { replace: true });
+    } else {
+      alert('Masukkan konfirmasi password dengan benar!')
+    }
   };
 
   const onFinishFailed = (error) => {
@@ -20,7 +30,7 @@ export default function RegistrationPage() {
   const toPageLogin = () => {
     navigate('/login')
   }
-
+  
   return (
     <Form
       className={styles.loginForm}
@@ -47,6 +57,8 @@ export default function RegistrationPage() {
             boxShadow: "none",
             // margin: "1rem 0",
           }}
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
         />
       </Form.Item>
       <Form.Item
@@ -64,6 +76,8 @@ export default function RegistrationPage() {
             boxShadow: "none",
           
           }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Form.Item>
       <Form.Item
@@ -82,6 +96,8 @@ export default function RegistrationPage() {
             
           }}
           placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Item>
       <Form.Item
@@ -100,9 +116,11 @@ export default function RegistrationPage() {
             
           }}
           placeholder="Confirmation Password"
+          value={confPass}
+          onChange={(e)=> setConfPass(e.target.value)}
         />
       </Form.Item>
-      <Link onClick={toPageLogin} style={{marginBottom:"1rem"}}>Sudah Punya Akun?</Link>
+      <Link onClick={toPageLogin}>Sudah Punya Akun?</Link>
       <Button
           type="primary"
           htmlType="submit"
