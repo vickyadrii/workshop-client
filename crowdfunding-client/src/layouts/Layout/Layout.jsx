@@ -29,7 +29,7 @@ export default function MobileLayout() {
       <Footer
         style={{
           backgroundColor: "#fff",
-          borderTop: "1px solid #cecece",
+          borderTop: "1px solid rgb(33, 180, 195)",
           position: "sticky",
           bottom: "0",
           zIndex: "10",
@@ -61,14 +61,14 @@ export default function MobileLayout() {
               Campaign
             </div>
           </Link>
-          <Link to="/">
+          <Link to="/add-campaign">
             <div style={stylePageNavbar}>
               <RocketTwoTone
                 style={{
                   fontSize: 32,
                 }}
               />
-              Add Campaign
+              Add
             </div>
           </Link>
         </div>
