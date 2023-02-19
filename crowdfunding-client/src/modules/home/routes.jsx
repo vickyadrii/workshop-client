@@ -1,9 +1,21 @@
-import { HomePage } from "./pages";
+import { CampaignPage, CampaignListPage, CampaignPageId, CampaignFormAdd } from "./pages";
 
 const homeRoutes = [
   {
-    path: "/home",
-    element: <HomePage />,
+    path: "/",
+    element: <CampaignPage />,
   },
+  {
+    path: "/campaign",
+    element: <CampaignListPage />,
+  },
+  {
+    path: "campaign/:id",
+    element: <CampaignPageId />,
+  },
+  {
+    path: "/add-campaign",
+    element: <CampaignFormAdd />
+  }
 ];
 export default homeRoutes;
