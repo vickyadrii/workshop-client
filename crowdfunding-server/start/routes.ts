@@ -28,7 +28,12 @@ Route.group(() => {
   Route.post("/login", "AuthController.login");
   Route.post("/register", "AuthController.register");
 
+  Route.get("/campaigns", "CampaignsController.index");
+  Route.get("/campaigns/:id", "CampaignsController.view");
+
   Route.group(() => {
     Route.post("/donations", "DonationsController.create");
+
+    Route.post("/campaigns", "CampaignsController.create");
   }).middleware("auth");
 }).prefix("api/v1");

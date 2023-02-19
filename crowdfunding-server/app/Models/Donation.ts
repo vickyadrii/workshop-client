@@ -6,7 +6,7 @@ export default class Donation extends BaseModel {
   public id: number;
 
   @column()
-  public fundraisingId: number;
+  public campaignId: number;
 
   @column()
   public total: number;
