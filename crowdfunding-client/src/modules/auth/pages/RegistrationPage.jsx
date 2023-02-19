@@ -53,7 +53,7 @@ export default function RegistrationPage() {
   }
 
   return (
-    <div style={{padding:'2rem'}}>
+    <div>
 
     
     <Form
@@ -63,7 +63,7 @@ export default function RegistrationPage() {
       autoComplete="off"
     >
       {contextHolder}
-      <h1 style={{color: "#15B2C0", fontSize:"1.7rem"}}>Registration</h1>
+      <h1 style={{color: "#15B2C0", fontSize:"1.7rem", textAlign:"center"}}>Registration</h1>
       <Form.Item
         name="fullname"
         rules={[{ required: true, message: "Please input your Fullname!" }]}
@@ -77,7 +77,7 @@ export default function RegistrationPage() {
             borderRadius: "0px",
             borderBottom: "1px solid #15B2C0",
             boxShadow: "none",
-            // margin: "1rem 0",
+            margin: "1rem 0",
           }}
           name={"fullname"}
           value={formRegis.fullname}
@@ -97,7 +97,7 @@ export default function RegistrationPage() {
             borderRadius: "0px",
             borderBottom: "1px solid #15B2C0",
             boxShadow: "none",
-          
+            margin: "1rem 0",
           }}
           name={"email"}
           value={formRegis.email}
@@ -116,7 +116,7 @@ export default function RegistrationPage() {
             borderRadius: "0px",
             borderBottom: "1px solid #15B2C0",
             boxShadow: "none",
-            
+            margin: "1rem 0",
           }}
           name={"password"}
           placeholder="Password"
@@ -136,7 +136,7 @@ export default function RegistrationPage() {
             borderRadius: "0px",
             borderBottom: "1px solid #15B2C0",
             boxShadow: "none",
-            
+            margin: "1rem 0",
           }}
           name={"confPass"}
           placeholder="Confirmation Password"
@@ -148,15 +148,19 @@ export default function RegistrationPage() {
           type="primary"
           htmlType="submit"
           style={{
-            width:"100%",
             backgroundColor: "#15B2C0",
-            fontWeight: "600",
-            marginTop: ""
+              fontWeight: "600",
+              width: "100%",
+              height: "50px",
           }}
         >
           Submit
         </Button>
-      <Link to={"/login"}>Already have account?</Link>
+      <Link to={"/login"} style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop:"1.5rem"
+        }}>Already have account?</Link>
     </Form>
     </div>
   );
