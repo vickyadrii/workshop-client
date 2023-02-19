@@ -2,7 +2,7 @@ import { getAccessTokenCookie } from "../../utils/cookie";
 
 export const onRequest = (config) => {
   config.headers = {
-    "Authorization": `Bearer ${getAccessTokenCookie()}`,
+    Authorization: `bearer ${getAccessTokenCookie()}`,
     "Content-Type": "application/json",
   };
   return config;
