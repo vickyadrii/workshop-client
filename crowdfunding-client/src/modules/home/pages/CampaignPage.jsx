@@ -65,10 +65,7 @@ const CampaignPage = () => {
           No one has ever become poor by giving
         </span>
       </div>
-      <CampaignCard
-        dataCampaigns={dataCampaigns}
-        reFetchDataCampaigns={fetchdataCampaigns}
-      />
+      <CampaignCard dataCampaigns={dataCampaigns} />
     </section>
   );
 };

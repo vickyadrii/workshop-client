@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, DatePicker } from "antd";
+import { Form, Input, Button, DatePicker, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { api } from "../../../config/api";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +11,11 @@ const initialData = {
   targetDate: "",
 };
 
-const token = "example"
-
 const CampaignAddPage = () => {
   const navigate = useNavigate()
   const [formCampaign, setFormCampaign] = useState(initialData);
+  const [messageApi, contextHolder] = message.useMessage();
+
   const onFinish = () => {
     addCampaign(formCampaign)
   };
@@ -30,27 +30,43 @@ const CampaignAddPage = () => {
   };
 
   const addCampaign = (data) => {
-    api.post("/campaigns", data , {
-      headers: {
-        'Authorization': `Bearer ${token}` 
-      }
-    })
+    api.post("/campaigns", data)
     .then(res => {
       console.log(res)
-      navigate('/')
+      success("Add Campaign Succes!")
+      setTimeout(()=>{
+        navigate('/')
+      },1500)
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      error("Failed to Add Campaign!")
+    })
+  };
+
+  const success = (msg) => {
+    messageApi.open({
+      type: 'success',
+      content: msg,
+    });
+  };
+
+  const error = (msg) => {
+    messageApi.open({
+      type: 'error',
+      content: msg,
+    });
   };
 
   return (
     <div style={{ padding: "2rem" }}>
+      {contextHolder}
       <Form
         style={{
           width: "100%",
         }}
         onFinish={onFinish}
       >
-        <h1 style={{ color: "#15B2C0", fontSize: "1.7rem" }}>Add Campaign</h1>
+        <h1 style={{ color: "#15B2C0", fontSize: "1.7rem", textAlign:"center" }}>Add Campaign</h1>
         <Form.Item
           name={"title"}
           rules={[{ required: true, message: "Please input your Title!" }]}
@@ -88,8 +104,9 @@ const CampaignAddPage = () => {
             htmlType="submit"
             style={{
               backgroundColor: "#15B2C0",
-              fontWeight: "600",
-              width: "100%",
+                fontWeight: "600",
+                width: "100%",
+                height: "50px",
             }}
           >
             <PlusOutlined />
