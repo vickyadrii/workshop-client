@@ -6,7 +6,7 @@ import { Button, Card, Slider } from "antd";
 import { AntDesignOutlined, CheckCircleTwoTone } from "@ant-design/icons";
 import { Avatar } from "antd";
 
-const CampaignPageId = () => {
+const CampaignDetailPage = () => {
   let { id } = useParams();
   const [inputValue, setInputValue] = useState(0);
   const navigate = useNavigate();
@@ -179,4 +179,4 @@ const CampaignPageId = () => {
   );
 };
 
-export default CampaignPageId;
+export default CampaignDetailPage;
