@@ -1,23 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeftOutlined, MoreOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import imageCard from "../../../assets/images/imageCard.png";
-import { Button, Card, Slider } from "antd";
-import { AntDesignOutlined, CheckCircleTwoTone } from "@ant-design/icons";
-import { Avatar } from "antd";
+import { Button, Card, Progress } from "antd";
+import { api } from "../../../config/api";
 
 const CampaignDetailPage = () => {
   let { id } = useParams();
-  const [inputValue, setInputValue] = useState(0);
   const navigate = useNavigate();
-
-  const handleOnChange = (newValue) => {
-    setInputValue(newValue);
-  };
+  const [inputValue, setInputValue] = useState(0);
+  const [detailCampaign, setDetailCampaign] = useState("");
 
   const handleonBack = () => {
     navigate(-1);
   };
+
+  const fetchDetailCampaign = () => {
+    api
+      .get(`/campaigns/${id}`)
+      .then((res) => {
+        console.log(res);
+        setDetailCampaign(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const { title, target, current_donation, targetDate } = detailCampaign;
+
+  useEffect(() => {
+    fetchDetailCampaign();
+  }, []);
 
   return (
     <section
@@ -30,8 +44,8 @@ const CampaignDetailPage = () => {
       <header
         style={{
           display: "flex",
+          gap: "10px",
           alignItems: "center",
-          justifyContent: "space-between",
           margin: "1rem 0",
         }}
       >
@@ -48,17 +62,6 @@ const CampaignDetailPage = () => {
           />
         </Button>
         <h3>Detail</h3>
-        <Button
-          style={{
-            padding: "5px 10px",
-          }}
-        >
-          <MoreOutlined
-            style={{
-              fontSize: 16,
-            }}
-          />
-        </Button>
       </header>
       <div>
         <img
@@ -69,15 +72,6 @@ const CampaignDetailPage = () => {
             borderRadius: "10px",
           }}
         />
-        <h2>Clean water for refugees camp</h2>
-        <p
-          style={{
-            color: "#15B2C0",
-            fontWeight: "600",
-          }}
-        >
-          9 Days left
-        </p>
       </div>
       <Card
         bordered={false}
@@ -86,84 +80,76 @@ const CampaignDetailPage = () => {
         }}
       >
         <div>
-          <p>Donation Raised</p>
+          <h3
+            style={{
+              color: "#706a6a",
+            }}
+          >
+            {title}
+          </h3>
           <div
             style={{
               display: "flex",
+              alignItems: "flex-end",
               justifyContent: "space-between",
             }}
           >
-            <p>17.345</p>
-            <p>{inputValue}%</p>
-          </div>
-        </div>
-        <div>
-          <Slider
-            min={0}
-            max={100}
-            onChange={handleOnChange}
-            defaultValue={32}
-            value={typeof inputValue === "number" ? inputValue : 0}
-          />
-        </div>
-      </Card>
-      <Card
-        title="Campaign by"
-        type="inner"
-        bordered={false}
-        style={{
-          margin: "1rem 0",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            <Avatar
-              size={{
-                xl: 84,
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "6px",
               }}
-              icon={<AntDesignOutlined />}
-            />
-            <div>
-              <h3
+            >
+              <p
                 style={{
-                  margin: 0,
                   color: "#15B2C0",
-                  fontSize: "18px",
+                  fontWeight: "600",
+                  fontSize: "20px",
+                  margin: 0,
                 }}
               >
-                Vicky Adri
-              </h3>
+                Rp. {current_donation}
+              </p>
               <p
                 style={{
                   margin: 0,
-                  color: "#b3b3b3",
-                  fontSize: "14px",
                 }}
               >
-                Verified user
+                Collected from{" "}
+                <span
+                  style={{
+                    fontWeight: "600",
+                  }}
+                >
+                  Rp. {target}
+                </span>
               </p>
             </div>
+            <p
+              style={{
+                margin: 0,
+              }}
+            >
+              {targetDate}
+            </p>
           </div>
-          <CheckCircleTwoTone
-            style={{
-              fontSize: 30,
-            }}
+        </div>
+        <div
+          style={{
+            margin: "8px 0",
+          }}
+        >
+          <Progress
+            percent={(current_donation / target) * 100}
+            showInfo={false}
           />
         </div>
       </Card>
       <Button
+        onClick={() => {
+          navigate(`/donation/${id}`);
+        }}
         type="primary"
         style={{
           backgroundColor: "#15B2C0",
