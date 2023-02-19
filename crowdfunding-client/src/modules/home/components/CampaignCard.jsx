@@ -4,11 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { homeCard } from "../../../data";
 import { Card } from "antd";
 
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
 import "./styles.css";
 
 const CampaignCard = () => {
