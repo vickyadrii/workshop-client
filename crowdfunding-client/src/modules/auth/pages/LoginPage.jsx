@@ -144,7 +144,7 @@ const LoginPage = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Link
+      <Link 
         to={"/registration"}
         style={{
           display: "flex",

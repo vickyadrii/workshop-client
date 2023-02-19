@@ -3,6 +3,7 @@ import {
   CampaignListPage,
   CampaignDetailPage,
   DonationPage,
+  CampaignAddPage,
 } from "./pages";
 
 const homeRoutes = [
@@ -13,6 +14,10 @@ const homeRoutes = [
   {
     path: "/campaign",
     element: <CampaignListPage />,
+  },
+  {
+    path: "/add-campaign",
+    element: <CampaignAddPage />,
   },
   {
     path: "campaign/:id",

@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { Navigation, Pagination } from "swiper";
+import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { homeCard } from "../../../data";
 import { Card, Progress } from "antd";
 import coverCampaigns from "../../../assets/images/imageCard.png";
 import "./styles.css";
 
-const CampaignCard = ({ dataCampaigns, reFetchDataCampaigns }) => {
+const CampaignCard = ({ dataCampaigns }) => {
   console.log(dataCampaigns);
   const navigate = useNavigate();
   return (
