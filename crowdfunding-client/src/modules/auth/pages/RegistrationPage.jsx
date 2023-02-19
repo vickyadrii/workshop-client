@@ -2,7 +2,9 @@ import {message} from "antd"
 import { Form, Input, Space, Button } from "antd";
 import styles from "./LoginPage.module.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { api } from "../../../config/api"
 
 const initialData = {
   fullname: "",
@@ -19,7 +21,7 @@ export default function RegistrationPage() {
   const onFinish = () => {
     console.log(formRegis);
     if(formRegis.password == formRegis.confPass){
-      navigate("/", { replace: true });
+      handleRegis()
     } else {
       warning("Your confirmation password must be the same!")
     }
@@ -41,7 +43,19 @@ export default function RegistrationPage() {
     setFormRegis(prevState => ({ ...prevState, [name]: value }));
   }
 
+  const handleRegis = () => {
+    api.post('/register', formRegis)
+    .then(res => {
+      console.log(res)
+      navigate("/", { replace: true })
+    })
+    .catch(err => console.log(err))
+  }
+
   return (
+    <div style={{padding:'2rem'}}>
+
+    
     <Form
       className={styles.loginForm}
       onFinish={onFinish}
@@ -142,7 +156,8 @@ export default function RegistrationPage() {
         >
           Submit
         </Button>
-        <p onClick={()=> navigate('/')} style={{color:"blue", marginBottom:"1.5rem"}}>Already have account!</p>
+      <Link to={"/login"}>Already have account?</Link>
     </Form>
+    </div>
   );
 }
