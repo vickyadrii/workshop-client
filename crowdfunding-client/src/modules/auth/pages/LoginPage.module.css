@@ -1,6 +1,6 @@
 .loginForm {
+  margin: 20px auto;
   max-width: 80%;
-  margin: 20px auto 0 auto;
 }
 .loginFormForgot {
   float: right;
@@ -11,4 +11,3 @@
 .loginFormButton {
   width: 100%;
 }
-

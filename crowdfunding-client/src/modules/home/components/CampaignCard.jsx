@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { homeCard } from "../../../data";
-import { Card } from "antd";
-
+import { Card, Progress } from "antd";
+import coverCampaigns from "../../../assets/images/imageCard.png";
 import "./styles.css";
 
-const CampaignCard = () => {
+const CampaignCard = ({ dataCampaigns, reFetchDataCampaigns }) => {
+  console.log(dataCampaigns);
   const navigate = useNavigate();
   return (
     <Swiper
@@ -45,27 +46,37 @@ const CampaignCard = () => {
       }}
       style={{
         margin: "2rem 0",
-        minHeight: "285px",
+        minHeight: "345px",
       }}
     >
-      {homeCard.map(
-        ({ image, title, descDonation, totalDonation, amount, id }, index) => (
+      {dataCampaigns.map(
+        (
+          { id, title, content, target, current_donation, targetDate },
+          index
+        ) => (
           <SwiperSlide key={index}>
             <Card
-              cover={<img src={image} alt="" />}
+              cover={<img src={coverCampaigns} alt="" />}
               onClick={() => {
                 navigate(`/campaign/${id}`);
               }}
               bordered={false}
+              style={{
+                cursor: "pointer",
+              }}
             >
               <h3
                 style={{
-                  margin: "0",
                   fontSize: "14px",
                 }}
               >
                 {title}
               </h3>
+              <Progress
+                percent={(current_donation / target) * 100}
+                size={"small"}
+                showInfo={false}
+              />
               <div
                 style={{
                   display: "flex",
@@ -82,12 +93,12 @@ const CampaignCard = () => {
                 >
                   <span
                     style={{
-                      color: "#d1d1d1",
+                      color: "#a5a1a1",
                       fontWeight: "600",
                       fontSize: "12px",
                     }}
                   >
-                    {descDonation}
+                    {content}
                   </span>
                   <span
                     style={{
@@ -95,7 +106,7 @@ const CampaignCard = () => {
                       fontWeight: "600",
                     }}
                   >
-                    {totalDonation}
+                    Rp. {current_donation}
                   </span>
                 </div>
                 <span
@@ -105,7 +116,7 @@ const CampaignCard = () => {
                     fontWeight: "600",
                   }}
                 >
-                  {amount}
+                  {targetDate}
                 </span>
               </div>
             </Card>

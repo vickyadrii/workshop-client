@@ -11,7 +11,6 @@ import { useState } from "react";
 const CampaignHeader = () => {
   const token = getAccessTokenCookie();
   const navigate = useNavigate();
-  // console.log(token);
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -80,6 +79,7 @@ const CampaignHeader = () => {
         title="Are you sure, you want to logout?"
         centered={true}
         open={showModal}
+        okText={"Yes"}
         onOk={handleLogout}
         onCancel={handleShowModal}
       >
