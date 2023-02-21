@@ -1,3 +1,3 @@
 export const config = {
-  API_BASE_URL: "http://hammercode.org:3333/api/v1",
+  API_BASE_URL: "https://hammercode.org:3333/api/v1",
 };
