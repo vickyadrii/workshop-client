@@ -46,7 +46,7 @@ const CampaignCard = ({ dataCampaigns }) => {
       }}
       style={{
         margin: "2rem 0",
-        minHeight: "345px",
+        minHeight: "365px",
       }}
     >
       {dataCampaigns.map(
@@ -65,59 +65,56 @@ const CampaignCard = ({ dataCampaigns }) => {
                 cursor: "pointer",
               }}
             >
-              <h3
-                style={{
-                  fontSize: "14px",
-                }}
-              >
-                {title}
-              </h3>
-              <Progress
-                percent={(current_donation / target) * 100}
-                size={"small"}
-                showInfo={false}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-end",
-                  justifyContent: "space-between",
-                }}
-              >
+              <div style={{
+                height: '150px'
+              }}>
+                <h3
+                  className="title-card"
+                  style={{
+                    fontSize: "14px",
+                  }}
+                >
+                  {title}
+                </h3>
+                <Progress
+                  percent={(current_donation / target) * 100}
+                  size={"small"}
+                  showInfo={false}
+                />
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    marginTop: "1rem",
+                    alignItems: "flex-end",
+                    justifyContent: "space-between",
                   }}
                 >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    <span className="content-card">{content}</span>
+                    <span
+                      style={{
+                        color: "#15B2C0",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Rp. {current_donation}
+                    </span>
+                  </div>
                   <span
                     style={{
-                      color: "#a5a1a1",
-                      fontWeight: "600",
+                      color: "#5c5c5c",
                       fontSize: "12px",
-                    }}
-                  >
-                    {content}
-                  </span>
-                  <span
-                    style={{
-                      color: "#15B2C0",
                       fontWeight: "600",
                     }}
                   >
-                    Rp. {current_donation}
+                    {targetDate}
                   </span>
                 </div>
-                <span
-                  style={{
-                    color: "#5c5c5c",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                  }}
-                >
-                  {targetDate}
-                </span>
               </div>
             </Card>
           </SwiperSlide>

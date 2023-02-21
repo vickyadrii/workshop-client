@@ -5,3 +5,21 @@
 .categories-card {
   padding: 0;
 }
+
+.title-card {
+  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.content-card {
+  color: "#a5a1a1";
+  font-weight: "600";
+  font-size: "12px";
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
