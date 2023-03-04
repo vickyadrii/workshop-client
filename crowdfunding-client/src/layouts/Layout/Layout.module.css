@@ -1,0 +1,10 @@
+.icon {
+  display: "flex";
+  align-items: "center";
+  gap: "2px";
+  flex-direction: "column";
+  height: "50px";
+  font-weight: 600;
+  color: "#15B2C0";
+  font-size: "12px";
+}

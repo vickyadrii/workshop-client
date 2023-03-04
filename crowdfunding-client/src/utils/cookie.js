@@ -7,9 +7,7 @@ export const CROWDFUNDING_COOKIE = "CROWDFUNDING_COOKIE";
 export const setAccessTokenCookie = (accessToken) => {
   const decodedToken = accessToken;
 
-  Cookie.set(CROWDFUNDING_COOKIE, accessToken, {
-    expires: milisecondsToDays(decodedToken.exp, false),
-  });
+  Cookie.set(CROWDFUNDING_COOKIE, accessToken);
 };
 
 export const getAccessTokenCookie = () => {

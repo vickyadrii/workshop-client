@@ -1,2 +1,3 @@
 export { default as authRoutes } from "./routes";
-export * from "./pages";
+
+// export * from "./pages";

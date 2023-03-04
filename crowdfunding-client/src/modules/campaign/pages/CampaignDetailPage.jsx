@@ -1,36 +1,29 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import imageCard from "../../../assets/images/imageCard.png";
 import { Button, Card, Progress } from "antd";
-import { api } from "../../../config/api";
+import campaignService from "../../../services/campaignService";
+import toRupiah from "@develoka/angka-rupiah-js";
 
 const CampaignDetailPage = () => {
   let { id } = useParams();
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState(0);
-  const [detailCampaign, setDetailCampaign] = useState("");
+  const [campaign, setCampaign] = useState({});
 
   const handleonBack = () => {
     navigate(-1);
   };
 
-  const fetchDetailCampaign = () => {
-    api
-      .get(`/campaigns/${id}`)
-      .then((res) => {
-        console.log(res);
-        setDetailCampaign(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const { title, target, current_donation, targetDate } = detailCampaign;
+  const fetchCampaign = useCallback(() => {
+    campaignService
+      .getCampaign(id)
+      .then(setCampaign)
+      .catch((err) => console.log(err));
+  }, [id]);
 
   useEffect(() => {
-    fetchDetailCampaign();
+    fetchCampaign();
   }, []);
 
   return (
@@ -85,7 +78,7 @@ const CampaignDetailPage = () => {
               color: "#706a6a",
             }}
           >
-            {title}
+            {campaign.title}
           </h3>
           <div
             style={{
@@ -109,7 +102,7 @@ const CampaignDetailPage = () => {
                   margin: 0,
                 }}
               >
-                Rp. {current_donation}
+                {toRupiah(Number(campaign.current_donation))}
               </p>
               <p
                 style={{
@@ -122,7 +115,7 @@ const CampaignDetailPage = () => {
                     fontWeight: "600",
                   }}
                 >
-                  Rp. {target}
+                  {toRupiah(Number(campaign.target))}
                 </span>
               </p>
             </div>
@@ -131,7 +124,7 @@ const CampaignDetailPage = () => {
                 margin: 0,
               }}
             >
-              {targetDate}
+              {campaign.targetDate}
             </p>
           </div>
         </div>
@@ -141,7 +134,7 @@ const CampaignDetailPage = () => {
           }}
         >
           <Progress
-            percent={(current_donation / target) * 100}
+            percent={(campaign.current_donation / campaign.target) * 100}
             showInfo={false}
           />
         </div>

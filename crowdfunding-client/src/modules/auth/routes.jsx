@@ -1,5 +1,7 @@
 import { LoginPage } from "./pages";
+
 import RegistrationPage from "./pages/RegistrationPage";
+
 const authRoutes = [
   { path: "/login", element: <LoginPage /> },
   {
@@ -7,4 +9,5 @@ const authRoutes = [
     element: <RegistrationPage />,
   },
 ];
+
 export default authRoutes;

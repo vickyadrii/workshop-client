@@ -1,167 +1,219 @@
-import {message} from "antd"
-import { Form, Input, Space, Button } from "antd";
+import { Form, Input, Button, Layout, message, Typography } from "antd";
 import styles from "./LoginPage.module.css";
+import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api } from "../../../config/api"
+import { api } from "../../../config/api";
+import { useAuth } from "../../../context/authContext";
 
-const initialData = {
-  fullname: "",
-  email: "",
-  password: "",
-  confPass: ""
-}
+const { Text, Title } = Typography;
+const { Content } = Layout;
 
 export default function RegistrationPage() {
+  const auth = useAuth();
   const navigate = useNavigate();
-  const [formRegis, setFormRegis] = useState(initialData)
+  const [isRegister, setIsRegister] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const onFinish = () => {
-    console.log(formRegis);
-    if(formRegis.password == formRegis.confPass){
-      handleRegis()
-    } else {
-      warning("Your confirmation password must be the same!")
-    }
-  };
+  const onFinish = (values) => {
+    const payload = {
+      fullname: values.fullname,
+      email: values.email,
+      password: values.password,
+    };
 
-  const warning = (msg) => {
-    messageApi.open({
-      type: 'warning',
-      content: msg,
-    })
-  }
+    setIsRegister(true);
+    api
+      .post("/register", payload)
+      .then((res) => {
+        setAccessTokenCookie(res.token);
+        messageApi.open({
+          type: "success",
+          content: "Login Successfully!",
+        });
+        setTimeout(() => {
+          navigate("/", { replace: true });
+        }, 1500);
+      })
+      .catch((err) => {
+        console.log(err);
+        messageApi.error({
+          type: "error",
+          content: "Failed to register",
+        });
+      })
+      .finally(() => setIsRegister(false));
+  };
 
   const onFinishFailed = (error) => {
     console.log(error);
   };
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormRegis(prevState => ({ ...prevState, [name]: value }));
-  }
 
-  const handleRegis = () => {
-    api.post('/register', formRegis)
-    .then(res => {
-      console.log(res)
-      navigate("/", { replace: true })
-    })
-    .catch(err => console.log(err))
-  }
+  useEffect(() => {
+    if (auth.user.isNil()) {
+      navigate("/");
+    }
+  }, []);
 
   return (
-    <div>
-
-    
-    <Form
-      className={styles.loginForm}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
+    <Layout
+      style={{
+        minHeight: "100vh",
+        maxWidth: "640px",
+        margin: "0 auto",
+      }}
     >
-      {contextHolder}
-      <h1 style={{color: "#15B2C0", fontSize:"1.7rem", textAlign:"center"}}>Registration</h1>
-      <Form.Item
-        name="fullname"
-        rules={[{ required: true, message: "Please input your Fullname!" }]}
-      >
-        <Input
-          size="large"
-          placeholder="Fullname"
-          bordered={false}
-          style={{
-            border: "none",
-            borderRadius: "0px",
-            borderBottom: "1px solid #15B2C0",
-            boxShadow: "none",
-            margin: "1rem 0",
-          }}
-          name={"fullname"}
-          value={formRegis.fullname}
-          onChange={handleChange}
-        />
-      </Form.Item>
-      <Form.Item
-        name="email"
-        rules={[{ required: true, message: "Please input your email!" }]}
-      >
-        <Input
-          size="large"
-          placeholder="Email"
-          bordered={false}
-          style={{
-            border: "none",
-            borderRadius: "0px",
-            borderBottom: "1px solid #15B2C0",
-            boxShadow: "none",
-            margin: "1rem 0",
-          }}
-          name={"email"}
-          value={formRegis.email}
-          onChange={handleChange}
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
-        <Input.Password
-          bordered={false}
-          size="large"
-          style={{
-            border: "none",
-            borderRadius: "0px",
-            borderBottom: "1px solid #15B2C0",
-            boxShadow: "none",
-            margin: "1rem 0",
-          }}
-          name={"password"}
-          placeholder="Password"
-          value={formRegis.password}
-          onChange={handleChange}
-        />
-      </Form.Item>
-      <Form.Item
-        name="confirm-password"
-        rules={[{ required: true, message: "Please input your Confirmation Password!" }]}
-      >
-        <Input.Password
-          bordered={false}
-          size="large"
-          style={{
-            border: "none",
-            borderRadius: "0px",
-            borderBottom: "1px solid #15B2C0",
-            boxShadow: "none",
-            margin: "1rem 0",
-          }}
-          name={"confPass"}
-          placeholder="Confirmation Password"
-          value={formRegis.confPass}
-          onChange={handleChange}
-        />
-      </Form.Item>
-      <Button
-          type="primary"
-          htmlType="submit"
-          style={{
-            backgroundColor: "#15B2C0",
-              fontWeight: "600",
-              width: "100%",
-              height: "50px",
-          }}
+      <Content style={{ backgroundColor: "#fdfcfc" }}>
+        <Form
+          className={styles.loginForm}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          Submit
-        </Button>
-      <Link to={"/login"} style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginTop:"1.5rem"
-        }}>Already have account?</Link>
-    </Form>
-    </div>
+          {contextHolder}
+          <div
+            style={{
+              textAlign: "center",
+            }}
+          >
+            <Title
+              level={2}
+              style={{
+                color: "#15B2C0",
+              }}
+            >
+              Registration
+            </Title>
+            <Text
+              style={{
+                color: "#9d9e9e",
+              }}
+            >
+              Your kindness journey starts here
+            </Text>
+          </div>
+
+          <Form.Item
+            name="fullname"
+            rules={[{ required: true, message: "Please input your Fullname!" }]}
+          >
+            <Input
+              prefix={<UserOutlined style={{ marginRight: "20px" }} />}
+              size="large"
+              placeholder="Fullname"
+              bordered={false}
+              style={{
+                border: "none",
+                borderRadius: "0px",
+                borderBottom: "1px solid #15B2C0",
+                boxShadow: "none",
+                margin: "1rem 0",
+              }}
+              name="fullname"
+            />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+              {
+                type: "email",
+                message: "Please input valid email",
+              },
+            ]}
+          >
+            <Input
+              prefix={<MailOutlined style={{ marginRight: "20px" }} />}
+              size="large"
+              placeholder="Email"
+              bordered={false}
+              style={{
+                border: "none",
+                borderRadius: "0px",
+                borderBottom: "1px solid #15B2C0",
+                boxShadow: "none",
+                margin: "1rem 0",
+              }}
+              name="email"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined style={{ marginRight: "20px" }} />}
+              bordered={false}
+              size="large"
+              style={{
+                border: "none",
+                borderRadius: "0px",
+                borderBottom: "1px solid #15B2C0",
+                boxShadow: "none",
+                margin: "1rem 0",
+              }}
+              name="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item
+            name="confirmationPassword"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Confirm password is required." },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The two passwords do not match!")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined style={{ marginRight: "20px" }} />}
+              bordered={false}
+              size="large"
+              style={{
+                border: "none",
+                borderRadius: "0px",
+                borderBottom: "1px solid #15B2C0",
+                boxShadow: "none",
+                margin: "1rem 0",
+              }}
+              placeholder="Confirmation Password..."
+            />
+          </Form.Item>
+
+          <Form.Item
+            style={{
+              paddingTop: "1rem",
+              width: "100%",
+            }}
+          >
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isRegister}
+              style={{
+                backgroundColor: "#15B2C0",
+                fontWeight: "600",
+                width: "100%",
+                height: "50px",
+              }}
+            >
+              Register
+            </Button>
+          </Form.Item>
+          <Link to="/login">Already have account?</Link>
+        </Form>
+      </Content>
+    </Layout>
   );
 }

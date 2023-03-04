@@ -1,9 +1,13 @@
 import { Button, Layout, Menu, Slider } from "antd";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { HeartTwoTone, HomeTwoTone, RocketTwoTone } from "@ant-design/icons";
+import requireAuth from "../../components/RequireAuth";
+import { useAuth } from "../../context/authContext";
 const { Content, Header, Footer } = Layout;
 
-export default function MobileLayout() {
+const MobileLayout = () => {
+  const auth = useAuth();
+
   const stylePageNavbar = {
     display: "flex",
     alignItems: "center",
@@ -19,7 +23,7 @@ export default function MobileLayout() {
     <Layout
       style={{
         minHeight: "100vh",
-        maxWidth: "640px",
+        maxWidth: "480px",
         margin: "0 auto",
       }}
     >
@@ -61,18 +65,22 @@ export default function MobileLayout() {
               Campaign
             </div>
           </Link>
-          <Link to="/add-campaign">
-            <div style={stylePageNavbar}>
-              <RocketTwoTone
-                style={{
-                  fontSize: 32,
-                }}
-              />
-              Add
-            </div>
-          </Link>
+          {auth.user ? (
+            <Link to="/campaign/add">
+              <div style={stylePageNavbar}>
+                <RocketTwoTone
+                  style={{
+                    fontSize: 32,
+                  }}
+                />
+                Add
+              </div>
+            </Link>
+          ) : null}
         </div>
       </Footer>
     </Layout>
   );
-}
+};
+
+export default requireAuth(MobileLayout);

@@ -1,42 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { homeCard } from "../../../data";
 import { Card, Progress } from "antd";
 import coverCampaigns from "../../../assets/images/imageCard.png";
 import "./styles.css";
 
-const CampaignCard = ({ dataCampaigns }) => {
-  console.log(dataCampaigns);
+const CampaignCard = ({ campaings }) => {
   const navigate = useNavigate();
   return (
     <Swiper
       modules={[Pagination]}
-      // navigation={true}
       pagination={true}
       loop={true}
       slidesPerView="auto"
       breakpoints={{
-        // when window width is >= 640px
         300: {
           slidesPerView: "auto",
-          spaceBetween: 30,
-          pagination: {
-            clickable: "true",
-            dynamicBullets: "true",
-          },
-        },
-        // when window width is >= 768px
-        768: {
-          slidesPerView: "auto",
-          spaceBetween: 30,
-          pagination: {
-            clickable: "true",
-            dynamicBullets: "true",
-          },
-        },
-        1024: {
-          slidesPerView: "2",
           spaceBetween: 30,
           pagination: {
             clickable: "true",
@@ -49,7 +28,7 @@ const CampaignCard = ({ dataCampaigns }) => {
         minHeight: "345px",
       }}
     >
-      {dataCampaigns.map(
+      {campaings.map(
         (
           { id, title, content, target, current_donation, targetDate },
           index

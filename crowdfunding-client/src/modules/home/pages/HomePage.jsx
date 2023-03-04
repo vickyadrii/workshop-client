@@ -6,15 +6,16 @@ import loveImages from "../../../assets/images/love.jpg";
 
 import { api } from "../../../config/api";
 import { Card } from "antd";
+import campaignService from "../../../services/campaignService";
 
-const CampaignPage = () => {
-  const [dataCampaigns, setDataCampaigns] = useState([]);
+const HomePage = () => {
+  const [campaigns, setCampaigns] = useState([]);
 
-  const fetchdataCampaigns = () => {
-    api
-      .get("/campaigns")
+  const fetchCampaigns = () => {
+    campaignService
+      .getAllCampaign()
       .then((res) => {
-        setDataCampaigns(res);
+        setCampaigns(res);
       })
       .catch((err) => {
         console.log(err);
@@ -23,7 +24,7 @@ const CampaignPage = () => {
 
   useEffect(() => {
     document.title = "Campaign Page | Workshop";
-    fetchdataCampaigns();
+    fetchCampaigns();
   }, []);
 
   return (
@@ -65,9 +66,9 @@ const CampaignPage = () => {
           No one has ever become poor by giving
         </span>
       </div>
-      <CampaignCard dataCampaigns={dataCampaigns} />
+      <CampaignCard campaings={campaigns} />
     </section>
   );
 };
 
-export default CampaignPage;
+export default HomePage;

@@ -1,60 +1,30 @@
-import { Avatar, Button, Modal } from "antd";
+import { Avatar, Modal, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { api } from "../../../config/api";
-import {
-  getAccessTokenCookie,
-  clearAccessTokenCookie,
-} from "../../../utils/cookie";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useAuth } from "../../../context/authContext";
+
+const { Text, Title } = Typography;
 
 const CampaignHeader = () => {
-  const token = getAccessTokenCookie();
+  const auth = useAuth();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-
-  const handleShowModal = () => {
-    setShowModal(!showModal);
-  };
 
   const handleLogout = () => {
-    clearAccessTokenCookie();
-    navigate("/login", { replace: true });
+    Modal.confirm({
+      title: "Info",
+      content: "Are you sure to logout?",
+      okText: "Ok",
+      cancelText: "Cancel",
+      onOk: () => auth.logout(),
+    });
   };
 
   return (
-    <section
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        margin: "1rem 0",
-      }}
-    >
-      <h3
-        style={{
-          fontSize: "14px",
-          color: "#c4c4c4",
-        }}
-      >
-        Let's help each others!
-      </h3>
-      {!token ? (
+    <div className="flex-between my-4">
+      <Text>Let's help each others!</Text>
+      {auth.user ? (
         <Link
-          to={"/login"}
-          style={{
-            backgroundColor: "#15B2C0",
-            color: "#ffffff",
-            fontWeight: "600",
-            padding: "0.5rem 1.5rem",
-            borderRadius: "6px",
-          }}
-        >
-          Sign in
-        </Link>
-      ) : (
-        <Link
-          onClick={handleShowModal}
+          onClick={handleLogout}
           style={{
             display: "flex",
             alignItems: "center",
@@ -65,27 +35,31 @@ const CampaignHeader = () => {
             style={{ backgroundColor: "#15B2C0" }}
             icon={<UserOutlined />}
           />
-          <h2
+
+          <Text
             style={{
               fontSize: "16px",
               color: "#15B2C0",
             }}
           >
             Welcome Back!
-          </h2>
+          </Text>
+        </Link>
+      ) : (
+        <Link
+          to="/login"
+          style={{
+            backgroundColor: "#15B2C0",
+            color: "#ffffff",
+            fontWeight: "600",
+            padding: "0.5rem 1.5rem",
+            borderRadius: "6px",
+          }}
+        >
+          Sign in
         </Link>
       )}
-      <Modal
-        title="Are you sure, you want to logout?"
-        centered={true}
-        open={showModal}
-        okText={"Yes"}
-        onOk={handleLogout}
-        onCancel={handleShowModal}
-      >
-        If you logout, you can open this page
-      </Modal>
-    </section>
+    </div>
   );
 };
 
