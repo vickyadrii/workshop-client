@@ -3,7 +3,6 @@ import Campaign from "App/Models/Campaign";
 import { schema } from "@ioc:Adonis/Core/Validator";
 import { AddCampaignPayload } from "App/Types/campaign";
 import Logger from "@ioc:Adonis/Core/Logger";
-import UserMapper from "App/Mapper/UserMapper";
 
 export default class CampaignsController {
   public async index({ }: HttpContextContract) {
