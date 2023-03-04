@@ -3,6 +3,7 @@ import { schema } from "@ioc:Adonis/Core/Validator";
 import User from "App/Models/User";
 import { LoginPayload, RegisterPayload } from "App/Types/auth";
 import Logger from "@ioc:Adonis/Core/Logger";
+import UserMapper from "App/Mapper/UserMapper";
 
 export default class AuthController {
   public async login({ auth, request, response }: HttpContextContract) {
@@ -52,5 +53,18 @@ export default class AuthController {
       Logger.error(err);
       return response.internalServerError({ err });
     }
+  }
+
+  public async current({ auth, response }: HttpContextContract) {
+    await auth.use("api").authenticate();
+
+    const user = auth.use("api").user!;
+
+    if (!user) {
+      response.badRequest({ message: "user not found" });
+      return;
+    }
+
+    return { ...UserMapper.map(user) };
   }
 }

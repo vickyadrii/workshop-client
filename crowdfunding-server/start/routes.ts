@@ -27,6 +27,7 @@ Route.get("/", async () => {
 Route.group(() => {
   Route.post("/login", "AuthController.login");
   Route.post("/register", "AuthController.register");
+  Route.get("/current", "AuthController.current");
 
   Route.get("/campaigns", "CampaignsController.index");
   Route.get("/campaigns/:id", "CampaignsController.view");
