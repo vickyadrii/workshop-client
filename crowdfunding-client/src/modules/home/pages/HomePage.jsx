@@ -4,9 +4,10 @@ import CampaignCard from "../components/CampaignCard";
 
 import loveImages from "../../../assets/images/love.jpg";
 
-import { api } from "../../../config/api";
-import { Card } from "antd";
 import campaignService from "../../../services/campaignService";
+import { Typography } from "antd";
+
+const { Text } = Typography;
 
 const HomePage = () => {
   const [campaigns, setCampaigns] = useState([]);
@@ -28,24 +29,14 @@ const HomePage = () => {
   }, []);
 
   return (
-    <section
-      style={{
-        maxWidth: "800px",
-        margin: "0 auto",
-        padding: "0 2rem",
-      }}
-    >
+    <div className="py-4">
       <CampaignHeader />
       <div
+        className="flex-center gap-2 p-4"
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "10px",
           backgroundColor: "#21B4C3",
           height: "6rem",
           borderRadius: "6px",
-          padding: "1rem",
         }}
       >
         <img
@@ -56,7 +47,7 @@ const HomePage = () => {
             borderRadius: "8px",
           }}
         />
-        <span
+        <Text
           style={{
             color: "#ffffff",
             fontSize: "16px",
@@ -64,10 +55,10 @@ const HomePage = () => {
           }}
         >
           No one has ever become poor by giving
-        </span>
+        </Text>
       </div>
       <CampaignCard campaings={campaigns} />
-    </section>
+    </div>
   );
 };
 

@@ -44,8 +44,8 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    console.log(auth.user);
-    if (auth.user.isNil()) {
+    console.log(auth.user.isNil());
+    if (!auth.user.isNil()) {
       navigate("/");
     }
   }, []);
@@ -54,7 +54,7 @@ const LoginPage = () => {
     <Layout
       style={{
         minHeight: "100vh",
-        maxWidth: "640px",
+        maxWidth: "480px",
         margin: "0 auto",
       }}
     >

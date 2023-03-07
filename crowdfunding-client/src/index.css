@@ -30,6 +30,14 @@ body {
   justify-content: center;
 }
 
+.primary-color {
+  color: #15b2c0;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
 .items-center {
   display: flex;
   align-items: center;
@@ -45,6 +53,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.flex-around {
+  display: flex;
+  justify-content: space-around;
 }
 
 .flex-end {
@@ -64,6 +77,14 @@ body {
 /* margin all sides */
 .m-2 {
   margin: 0.5rem;
+}
+
+.m-4 {
+  margin: 1rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 /* margin vertical */
@@ -147,6 +168,10 @@ body {
   margin-left: 1rem;
 }
 
+.py-4 {
+  margin: 0 1rem;
+}
+
 .gap-4 {
   gap: 1rem;
 }
@@ -174,4 +199,12 @@ body {
 
 .bg-primary-color:hover {
   color: #ffffff;
+}
+
+.fn-4 {
+  font-size: "1rem";
+}
+
+.bold {
+  font-weight: bold;
 }

@@ -51,7 +51,7 @@ export default function RegistrationPage() {
   };
 
   useEffect(() => {
-    if (auth.user.isNil()) {
+    if (!auth.user.isNil()) {
       navigate("/");
     }
   }, []);
@@ -60,7 +60,7 @@ export default function RegistrationPage() {
     <Layout
       style={{
         minHeight: "100vh",
-        maxWidth: "640px",
+        maxWidth: "480px",
         margin: "0 auto",
       }}
     >

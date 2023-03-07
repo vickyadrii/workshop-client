@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
         setUser(user);
       })
       .catch((err) => {
-        logout();
+        console.log(err);
       })
       .finally(() => setIsChecking(false));
   }, []);

@@ -1,22 +1,23 @@
-import { Button, Layout, Menu, Slider } from "antd";
+import { Button, Layout, Menu, Slider, Typography } from "antd";
 import { Link, Outlet } from "react-router-dom";
 import { HeartTwoTone, HomeTwoTone, RocketTwoTone } from "@ant-design/icons";
-import requireAuth from "../../components/RequireAuth";
 import { useAuth } from "../../context/authContext";
 const { Content, Header, Footer } = Layout;
+
+const { Text } = Typography;
 
 const MobileLayout = () => {
   const auth = useAuth();
 
   const stylePageNavbar = {
-    display: "flex",
-    alignItems: "center",
-    gap: "2px",
-    flexDirection: "column",
-    height: "50px",
-    fontWeight: 600,
-    color: "#15B2C0",
-    fontSize: "12px",
+    // display: "flex",
+    // alignItems: "center",
+    // gap: "2px",
+    // flexDirection: "column",
+    // height: "50px",
+    // fontWeight: 600,
+    // color: "#15B2C0",
+    // fontSize: "12px",
   };
 
   return (
@@ -39,42 +40,25 @@ const MobileLayout = () => {
           zIndex: "10",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <Link to="/">
-            <div style={stylePageNavbar}>
-              <HomeTwoTone
-                style={{
-                  fontSize: 32,
-                }}
-              />
-              Home
-            </div>
+        <div className="flex-around">
+          <Link to="/" className="items-center flex-column primary-color">
+            <HomeTwoTone style={{ fontSize: 20 }} />
+            <Text className="primary-color">Home</Text>
           </Link>
-          <Link to="/campaign">
-            <div style={stylePageNavbar}>
-              <HeartTwoTone
-                style={{
-                  fontSize: 32,
-                }}
-              />
-              Campaign
-            </div>
+          <Link
+            to="/campaign"
+            className="items-center flex-column primary-color"
+          >
+            <HeartTwoTone style={{ fontSize: 20 }} />
+            <Text className="primary-color">Campaign</Text>
           </Link>
-          {auth.user ? (
-            <Link to="/campaign/add">
-              <div style={stylePageNavbar}>
-                <RocketTwoTone
-                  style={{
-                    fontSize: 32,
-                  }}
-                />
-                Add
-              </div>
+          {!auth.user.isNil() ? (
+            <Link
+              to="/campaign/add"
+              className="items-center flex-column primary-color"
+            >
+              <RocketTwoTone style={{ fontSize: 20 }} />
+              <Text className="primary-color">Add</Text>
             </Link>
           ) : null}
         </div>
@@ -83,4 +67,4 @@ const MobileLayout = () => {
   );
 };
 
-export default requireAuth(MobileLayout);
+export default MobileLayout;

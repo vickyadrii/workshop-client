@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Card, Progress } from "antd";
+import { Card, Progress, Typography } from "antd";
 import coverCampaigns from "../../../assets/images/imageCard.png";
 import "./styles.css";
+
+const { Title, Text } = Typography;
 
 const CampaignCard = ({ campaings }) => {
   const navigate = useNavigate();
@@ -23,8 +25,8 @@ const CampaignCard = ({ campaings }) => {
           },
         },
       }}
+      className="mt-8"
       style={{
-        margin: "2rem 0",
         minHeight: "345px",
       }}
     >
@@ -44,13 +46,7 @@ const CampaignCard = ({ campaings }) => {
                 cursor: "pointer",
               }}
             >
-              <h3
-                style={{
-                  fontSize: "14px",
-                }}
-              >
-                {title}
-              </h3>
+              <Title level={4}>{title}</Title>
               <Progress
                 percent={(current_donation / target) * 100}
                 size={"small"}
@@ -63,14 +59,8 @@ const CampaignCard = ({ campaings }) => {
                   justifyContent: "space-between",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    marginTop: "1rem",
-                  }}
-                >
-                  <span
+                <div className="flex flex-column mt-4">
+                  <Text
                     style={{
                       color: "#a5a1a1",
                       fontWeight: "600",
@@ -78,17 +68,18 @@ const CampaignCard = ({ campaings }) => {
                     }}
                   >
                     {content}
-                  </span>
-                  <span
+                  </Text>
+                  <Text
+                    className="primary-color"
                     style={{
                       color: "#15B2C0",
                       fontWeight: "600",
                     }}
                   >
                     Rp. {current_donation}
-                  </span>
+                  </Text>
                 </div>
-                <span
+                <Text
                   style={{
                     color: "#5c5c5c",
                     fontSize: "12px",
@@ -96,7 +87,7 @@ const CampaignCard = ({ campaings }) => {
                   }}
                 >
                   {targetDate}
-                </span>
+                </Text>
               </div>
             </Card>
           </SwiperSlide>

@@ -2,9 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import imageCard from "../../../assets/images/imageCard.png";
-import { Button, Card, Progress } from "antd";
+import { Button, Card, Progress, Typography } from "antd";
 import campaignService from "../../../services/campaignService";
 import toRupiah from "@develoka/angka-rupiah-js";
+
+const { Text } = Typography;
 
 const CampaignDetailPage = () => {
   let { id } = useParams();
@@ -27,60 +29,29 @@ const CampaignDetailPage = () => {
   }, []);
 
   return (
-    <section
-      style={{
-        maxWidth: "800px",
-        margin: "0 auto",
-        padding: "0 2rem",
-      }}
-    >
-      <header
-        style={{
-          display: "flex",
-          gap: "10px",
-          alignItems: "center",
-          margin: "1rem 0",
-        }}
-      >
-        <Button
-          onClick={handleonBack}
-          style={{
-            padding: "5px 12px",
-          }}
-        >
-          <ArrowLeftOutlined
-            style={{
-              fontSize: 16,
-            }}
-          />
+    <div className="py-4">
+      <div className="items-center gap-4 my-4">
+        <Button onClick={handleonBack}>
+          <ArrowLeftOutlined size={16} />
         </Button>
-        <h3>Detail</h3>
-      </header>
-      <div>
-        <img
-          src={imageCard}
-          alt="image card"
-          style={{
-            width: "100%",
-            borderRadius: "10px",
-          }}
-        />
+        <Text className="fn-4 bold">Detail</Text>
       </div>
       <Card
-        bordered={false}
-        style={{
-          margin: "1rem 0",
-        }}
+        className="my-4"
+        cover={
+          <img
+            src={imageCard}
+            alt="image card"
+            style={{
+              width: "100%",
+            }}
+          />
+        }
       >
         <div>
-          <h3
-            style={{
-              color: "#706a6a",
-            }}
-          >
-            {campaign.title}
-          </h3>
+          <Card.Meta title={campaign.title} description={campaign.content} />
           <div
+            className="mt-4"
             style={{
               display: "flex",
               alignItems: "flex-end",
@@ -88,51 +59,29 @@ const CampaignDetailPage = () => {
             }}
           >
             <div
+              className="flex flex-column"
               style={{
-                display: "flex",
-                flexDirection: "column",
                 gap: "6px",
               }}
             >
-              <p
+              <Text
+                className="primary-color"
                 style={{
-                  color: "#15B2C0",
                   fontWeight: "600",
                   fontSize: "20px",
                   margin: 0,
                 }}
               >
                 {toRupiah(Number(campaign.current_donation))}
-              </p>
-              <p
-                style={{
-                  margin: 0,
-                }}
-              >
-                Collected from{" "}
-                <span
-                  style={{
-                    fontWeight: "600",
-                  }}
-                >
-                  {toRupiah(Number(campaign.target))}
-                </span>
-              </p>
+              </Text>
+              <Text>
+                Collected from <b>{toRupiah(Number(campaign.target))}</b>
+              </Text>
             </div>
-            <p
-              style={{
-                margin: 0,
-              }}
-            >
-              {campaign.targetDate}
-            </p>
+            <Text>{campaign.targetDate}</Text>
           </div>
         </div>
-        <div
-          style={{
-            margin: "8px 0",
-          }}
-        >
+        <div className="my-2">
           <Progress
             percent={(campaign.current_donation / campaign.target) * 100}
             showInfo={false}
@@ -144,17 +93,16 @@ const CampaignDetailPage = () => {
           navigate(`/donation/${id}`);
         }}
         type="primary"
+        className="w-full my-4"
         style={{
           backgroundColor: "#15B2C0",
           fontWeight: "600",
-          margin: "1rem 0",
-          width: "100%",
           height: "50px",
         }}
       >
         Donate now
       </Button>
-    </section>
+    </div>
   );
 };
 

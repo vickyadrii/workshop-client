@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Form, Input, Button, DatePicker, message, Modal } from "antd";
+import { Form, Input, Button, DatePicker, message, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { api } from "../../../config/api";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import campaignService from "../../../services/campaignService";
 import NotificationError from "../../../components/Notifications/NotificationError";
+import requireAuth from "../../../components/RequireAuth";
+
+const { Title } = Typography;
 
 const AddNewCampaignPage = () => {
   const navigate = useNavigate();
@@ -44,11 +46,9 @@ const AddNewCampaignPage = () => {
     <div style={{ padding: "0 1rem" }}>
       {contextHolder}
       <Form className="w-full" onFinish={onFinish} layout="vertical">
-        <h1
-          style={{ color: "#15B2C0", fontSize: "1.7rem", textAlign: "center" }}
-        >
-          Start a campaign
-        </h1>
+        <Title level={2} style={{ color: "#15B2C0", textAlign: "center" }}>
+          Start a new campaign
+        </Title>
         <Form.Item
           label="Title"
           name="title"
@@ -106,4 +106,4 @@ const AddNewCampaignPage = () => {
   );
 };
 
-export default AddNewCampaignPage;
+export default requireAuth(AddNewCampaignPage);

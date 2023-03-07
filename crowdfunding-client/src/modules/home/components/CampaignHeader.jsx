@@ -7,7 +7,6 @@ const { Text, Title } = Typography;
 
 const CampaignHeader = () => {
   const auth = useAuth();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     Modal.confirm({
@@ -22,15 +21,8 @@ const CampaignHeader = () => {
   return (
     <div className="flex-between my-4">
       <Text>Let's help each others!</Text>
-      {auth.user ? (
-        <Link
-          onClick={handleLogout}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
+      {!auth.user.isNil() ? (
+        <Link onClick={handleLogout} className="items-center gap-2">
           <Avatar
             style={{ backgroundColor: "#15B2C0" }}
             icon={<UserOutlined />}
